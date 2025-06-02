@@ -1,0 +1,30 @@
+### Get all locations
+GET http://localhost:3000/locations
+
+
+### Get a location by ID
+GET http://localhost:3000/locations/665aa2dcf9e1e30dca0f4b45
+
+
+### Create a new location
+POST http://localhost:3000/locations
+Content-Type: application/json
+
+{
+  "Country": "Liberia",
+  "City": "Monrovia"
+}
+
+
+### Update a location by ID
+PUT http://localhost:3000/locations
+Content-Type: application/json
+
+{
+  "Country": "Liberia",
+  "City": "Paynesville"
+}
+
+
+### Delete a location by ID
+DELETE http://localhost:3000/locations
