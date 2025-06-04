@@ -14,9 +14,10 @@ app
   .use(bodyParser.json())
   .use(
     session({
-      secret: "your_secret",
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: true,
+      store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
     })
   )
   .use(passport.initialize())
