@@ -7,6 +7,7 @@ const session = require("express-session");
 const GitHubStrategy = require("passport-github2").Strategy;
 const cors = require("cors");
 const dotenv = require("dotenv").config();
+const MongoStore = require("connect-mongo");
 
 const port = process.env.PORT || 3000;
 app.use(express.json());
@@ -18,6 +19,9 @@ app
       resave: false,
       saveUninitialized: true,
       store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+      },
     })
   )
   .use(passport.initialize())
