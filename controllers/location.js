@@ -4,15 +4,14 @@ const ObjectId = require("mongodb").ObjectId;
 // Controller to handle location-related requests
 const getAllLocations = async (req, res) => {
   const results = await mongodb.getDb().collection("Locations").find();
-  results
-    .toArray()
-    .then((locations) => {
+  try {
+    results.toArray().then((locations) => {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json(locations);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 const getLocationById = async (req, res) => {
@@ -21,19 +20,18 @@ const getLocationById = async (req, res) => {
     .getDb()
     .collection("Locations")
     .find({ _id: locationId });
-  results
-    .toArray()
-    .then((location) => {
+  try {
+    results.toArray().then((location) => {
       if (location.length > 0) {
         res.setHeader("Content-Type", "application/json");
         res.status(200).json(location[0]);
       } else {
         res.status(404).json({ message: "Location not found" });
       }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err.message });
     });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 const addLocation = async (req, res) => {
@@ -44,16 +42,21 @@ const addLocation = async (req, res) => {
     Country: req.body.Country,
     City: req.body.City,
   };
-  const results = await mongodb
-    .getDb()
-    .collection("Locations")
-    .insertOne(newLocation);
-  if (results.acknowledged) {
-    res
-      .status(201)
-      .json({ message: "Location added successfully", id: results.insertedId });
-  } else {
-    res.status(500).json({ error: "Failed to add location" });
+  try {
+    const results = await mongodb
+      .getDb()
+      .collection("Locations")
+      .insertOne(newLocation);
+    if (results.acknowledged) {
+      res.status(201).json({
+        message: "Location added successfully",
+        id: results.insertedId,
+      });
+    } else {
+      res.status(500).json({ error: "Failed to add location" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -69,14 +72,20 @@ const updateLocation = async (req, res) => {
     Country: req.body.Country,
     City: req.body.City,
   };
-  const results = await mongodb
-    .getDb()
-    .collection("Locations")
-    .updateOne({ _id: locationId }, { $set: updatedLocation });
-  if (results.modifiedCount > 0) {
-    res.status(200).json({ message: "Location updated successfully" });
-  } else {
-    res.status(404).json({ message: "Location not found or no changes made" });
+  try {
+    const results = await mongodb
+      .getDb()
+      .collection("Locations")
+      .updateOne({ _id: locationId }, { $set: updatedLocation });
+    if (results.modifiedCount > 0) {
+      res.status(200).json({ message: "Location updated successfully" });
+    } else {
+      res
+        .status(404)
+        .json({ message: "Location not found or no changes made" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
@@ -85,14 +94,18 @@ const deleteLocation = async (req, res) => {
   if (!ObjectId.isValid(locationId)) {
     return res.status(400).json({ error: "Invalid location ID" });
   }
-  const results = await mongodb
-    .getDb()
-    .collection("Locations")
-    .deleteOne({ _id: locationId });
-  if (results.deletedCount > 0) {
-    res.status(200).json({ message: "Location deleted successfully" });
-  } else {
-    res.status(404).json({ message: "Location not found" });
+  try {
+    const results = await mongodb
+      .getDb()
+      .collection("Locations")
+      .deleteOne({ _id: locationId });
+    if (results.deletedCount > 0) {
+      res.status(200).json({ message: "Location deleted successfully" });
+    } else {
+      res.status(404).json({ message: "Location not found" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
