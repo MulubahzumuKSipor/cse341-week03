@@ -3,7 +3,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 // Controller to handle location-related requests
 const getAllLocations = async (req, res) => {
-  const results = await mongodb.getDb().db().collection("Locations").find();
+  const results = await mongodb.getDb().collection("Locations").find();
   results
     .toArray()
     .then((locations) => {
@@ -19,7 +19,6 @@ const getLocationById = async (req, res) => {
   const locationId = new ObjectId(req.params.id);
   const results = await mongodb
     .getDb()
-    .db()
     .collection("Locations")
     .find({ _id: locationId });
   results
@@ -47,7 +46,6 @@ const addLocation = async (req, res) => {
   };
   const results = await mongodb
     .getDb()
-    .db()
     .collection("Locations")
     .insertOne(newLocation);
   if (results.acknowledged) {
@@ -73,7 +71,6 @@ const updateLocation = async (req, res) => {
   };
   const results = await mongodb
     .getDb()
-    .db()
     .collection("Locations")
     .updateOne({ _id: locationId }, { $set: updatedLocation });
   if (results.modifiedCount > 0) {
@@ -90,7 +87,6 @@ const deleteLocation = async (req, res) => {
   }
   const results = await mongodb
     .getDb()
-    .db()
     .collection("Locations")
     .deleteOne({ _id: locationId });
   if (results.deletedCount > 0) {

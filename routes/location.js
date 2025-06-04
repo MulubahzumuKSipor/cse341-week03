@@ -3,6 +3,9 @@ const router = express.Router();
 
 const locationsController = require("../controllers/location");
 
+// Authenticate Routes
+const { isAuthenticated } = require("../middleware/authenticate");
+
 // Route to get all locations
 router.get("/", locationsController.getAllLocations);
 
@@ -10,12 +13,12 @@ router.get("/", locationsController.getAllLocations);
 router.get("/:id", locationsController.getLocationById);
 
 // Route to PUT a location
-router.post("/", locationsController.addLocation);
+router.post("/", isAuthenticated, locationsController.addLocation);
 
 // Route to PATCH a location
-router.put("/:id", locationsController.updateLocation);
+router.put("/:id", isAuthenticated, locationsController.updateLocation);
 
 // Route to DELETE a location
-router.delete("/:id", locationsController.deleteLocation);
+router.delete("/:id", isAuthenticated, locationsController.deleteLocation);
 
 module.exports = router;

@@ -1,12 +1,24 @@
-// const express = require("express");
-// const router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-// const locationsController = require("../controllers/user");
+const userController = require("../controllers/user");
 
-// // Route to get all locations
-// router.get("/", locationsController.getAllUser);
+// Authenticate Routes
+const { isAuthenticated } = require("../middleware/authenticate");
 
-// // Route to get a specific location by ID
-// router.get("/:id", locationsController.getUserById);
+// Route to get all user
+router.get("/", userController.getAllUser);
 
-// module.exports = router;
+// Route to get a specific user by ID
+router.get("/:id", userController.getUserById);
+
+// Route to PUT a user
+router.post("/", isAuthenticated, userController.addUser);
+
+// Route to PATCH a user
+router.put("/:id", isAuthenticated, userController.updateUser);
+
+// Route to DELETE a user
+router.delete("/:id", isAuthenticated, userController.deleteUser);
+
+module.exports = router;
