@@ -6,8 +6,10 @@
     "version": "1.0.0"
   },
   "host": "https://cse341-week03-91us.onrender.com",
-  "basePath": "",
-  "schemes": ["https"],
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
   "paths": {
     "/locations/": {
       "get": {
