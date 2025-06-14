@@ -12,6 +12,9 @@ router.get("/", userController.getAllUser);
 // Route to get a specific user by ID
 router.get("/:id", userController.getUserById);
 
+// Route to get a specific user by Name
+router.get("/name/:name", userController.getUserByName);
+
 // Route to PUT a user
 router.post("/", isAuthenticated, userController.addUser);
 

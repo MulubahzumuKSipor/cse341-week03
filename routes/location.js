@@ -12,6 +12,9 @@ router.get("/", locationsController.getAllLocations);
 // Route to get a specific location by ID
 router.get("/:id", locationsController.getLocationById);
 
+// Route to get a specific location by City
+router.get("/city/:city", locationsController.getLocationByCity);
+
 // Route to PUT a location
 router.post("/", isAuthenticated, locationsController.addLocation);
 

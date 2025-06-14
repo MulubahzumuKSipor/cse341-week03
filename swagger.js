@@ -1,3 +1,4 @@
+const fs = require("fs");
 const swaggerAutogen = require("swagger-autogen")();
 const dotenv = require("dotenv").config();
 
@@ -7,10 +8,14 @@ const doc = {
     description: "API documentation for the Location service",
   },
   host: process.env.SWAGGER_HOST || "localhost:3000",
-  schemes: [process.env.NODE_ENV === "production" ? "http" : "https"],
+  schemes: ["http", "https"],
 };
 
 const outputFile = "./swagger.json";
-const endpointsFiles = ["./routes/index.js"];
+const endpointsFiles = ["./routes/**/*.js"];
 
+// Clear existing swagger.json
+fs.writeFileSync(outputFile, "", "utf8");
+
+// Regenerate Swagger documentation
 swaggerAutogen(outputFile, endpointsFiles, doc);

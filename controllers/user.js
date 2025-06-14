@@ -40,6 +40,25 @@ const getUserById = async (req, res) => {
   }
 };
 
+const getUserByName = async (req, res) => {
+  const name = req.params.name;
+
+  try {
+    const results = await mongodb
+      .getDb()
+      .collection("Users")
+      .find({ firstName: { $regex: new RegExp(`^${name}$`, "i") } })
+      .toArray();
+    if (results.length > 0) {
+      res.status(200).json(results);
+    } else {
+      res.status(404).json({ message: "No matching data found." });
+    }
+  } catch (error) {
+    console.error("Error fetching data by name:", error);
+    res.status(500).json({ message: "Server error." });
+  }
+};
 const addUser = async (req, res) => {
   if (!req.body.Country || !req.body.City) {
     return res.status(400).json({ error: "Country and City are required" });
@@ -128,6 +147,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getAllUser,
   getUserById,
+  getUserByName,
   addUser,
   updateUser,
   deleteUser,

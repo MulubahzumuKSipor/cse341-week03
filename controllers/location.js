@@ -34,6 +34,26 @@ const getLocationById = async (req, res) => {
   }
 };
 
+const getLocationByCity = async (req, res) => {
+  const city = req.params.city;
+
+  try {
+    const results = await mongodb
+      .getDb()
+      .collection("Locations")
+      .find({ City: { $regex: new RegExp(`^${city}$`, "i") } })
+      .toArray();
+    if (results.length > 0) {
+      res.status(200).json(results);
+    } else {
+      res.status(404).json({ message: "No matching data found." });
+    }
+  } catch (error) {
+    console.error("Error fetching data by name:", error);
+    res.status(500).json({ message: "Server error." });
+  }
+};
+
 const addLocation = async (req, res) => {
   if (!req.body.Country || !req.body.City) {
     return res.status(400).json({ error: "Country and City are required" });
@@ -112,6 +132,7 @@ const deleteLocation = async (req, res) => {
 module.exports = {
   getAllLocations,
   getLocationById,
+  getLocationByCity,
   addLocation,
   updateLocation,
   deleteLocation,

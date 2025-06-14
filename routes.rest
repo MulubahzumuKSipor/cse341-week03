@@ -1,9 +1,11 @@
-### Get all locations
+### Get all location
 GET http://localhost:3000/locations
+### Get a location by City
+# GET http://localhost:3000/locations/Monrovia
 
 
 ### Get a location by ID
-GET http://localhost:3000/locations/665aa2dcf9e1e30dca0f4b45
+GET http://localhost:3000/locations/683cf935487783d0b5144b76
 
 
 ### Create a new location
@@ -17,11 +19,11 @@ Content-Type: application/json
 
 
 ### Update a location by ID
-PUT http://localhost:3000/locations
+PUT http://localhost:3000/locations/683cf935487783d0b5144b76
 Content-Type: application/json
 
 {
-  "Country": "Liberia",
+  "Country": "USA",
   "City": "Paynesville"
 }
 
