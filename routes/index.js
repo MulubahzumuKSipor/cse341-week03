@@ -9,6 +9,8 @@ router.use("/", require("./swagger"));
 
 router.use("/locations", require("./location"));
 router.use("/user", require("./user"));
+router.use("/friend", require("./friend"));
+router.use("/hobby", require("./hobby"));
 
 router.get("/login", passport.authenticate("github"), (req, res) => {});
 
