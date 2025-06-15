@@ -5,7 +5,7 @@
     "description": "API documentation for the Location service",
     "version": "1.0.0"
   },
-  "host": "cse341-week03-91us.onrender.com/",
+  "host": "cse341-week03-91us.onrender.com",
   "basePath": "/",
   "schemes": [
     "http",
