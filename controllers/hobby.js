@@ -59,8 +59,10 @@ const addHobby = async (req, res) => {
     return res.status(400).json({ error: "Country and City are required" });
   }
   const newhobby = {
-    Country: req.body.Country,
-    City: req.body.City,
+    hobby: req.body.hobby,
+    type: req.body.type,
+    frequency: req.body.frequency,
+    ranking: req.body.ranking,
   };
   try {
     const results = await mongodb
@@ -89,8 +91,10 @@ const updateHobby = async (req, res) => {
     return res.status(400).json({ error: "Invalid hobby ID" });
   }
   const updatedhobby = {
-    Country: req.body.Country,
-    City: req.body.City,
+    hobby: req.body.hobby,
+    type: req.body.type,
+    frequency: req.body.frequency,
+    ranking: req.body.ranking,
   };
   try {
     const results = await mongodb
