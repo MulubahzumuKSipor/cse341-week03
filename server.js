@@ -48,7 +48,7 @@ passport.use(
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL:
         process.env.GITHUB_CALLBACK_URL ||
-        "http://localhost:3000/auth/github/callback",
+        "http://cse341-week03-91us.onrender.com/auth/github/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       // Here you can save the user profile to your database
