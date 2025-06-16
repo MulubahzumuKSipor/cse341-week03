@@ -60,8 +60,8 @@ const getUserByName = async (req, res) => {
   }
 };
 const addUser = async (req, res) => {
-  if (!req.body.Country || !req.body.City) {
-    return res.status(400).json({ error: "Country and City are required" });
+  if (!isValidUser) {
+    return res.status(400).json({ error: "User Credentials are required" });
   }
   const newusers = {
     firstName: req.body.firstName,

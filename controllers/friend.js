@@ -1,4 +1,5 @@
 const mongodb = require("../data/database");
+const { isValidFriend } = require("../utilities");
 const ObjectId = require("mongodb").ObjectId;
 
 // Controller to handle Friend-related requests
@@ -55,7 +56,7 @@ const getFriendById = async (req, res) => {
 // };
 
 const addFriend = async (req, res) => {
-  if (!req.body.friend_first_name || !req.body.friend_last_name) {
+  if (!isValidFriend) {
     return res.status(400).json({ error: "First and last name are required" });
   }
   const newFriend = {
@@ -82,7 +83,7 @@ const addFriend = async (req, res) => {
 
 const updateFriend = async (req, res) => {
   const friendId = new ObjectId(req.params.id);
-  if (!req.body.friend_first_name || !req.body.friend_last_name) {
+  if (!isValidFriend) {
     return res.status(400).json({ error: "First and Last name are required" });
   }
   if (!ObjectId.isValid(friendId)) {
